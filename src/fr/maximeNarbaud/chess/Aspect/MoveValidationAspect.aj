@@ -8,7 +8,10 @@ import fr.maximeNarbaud.chess.piece.Knight;
 public aspect MoveValidationAspect {
 
     // Pointcut+Advice to check if a move is valid
-    boolean around(Player player, Move mv) : call (boolean fr.maximeNarbaud.chess.agent.Player+.isValidMove(Move)) && target(player) && args(mv) {
+    boolean around(Player player, Move mv) :
+            call (boolean fr.maximeNarbaud.chess.agent.Player+.isValidMove(Move))
+            && target(player) && args(mv) {
+
         if (mv == null) { return false; }
 
         // Check that a piece is present and that it belongs to the current player (Validation a + b)
