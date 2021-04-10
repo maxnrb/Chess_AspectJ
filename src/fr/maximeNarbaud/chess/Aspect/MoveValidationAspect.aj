@@ -14,16 +14,16 @@ public aspect MoveValidationAspect {
 
         if (mv == null) { return false; }
 
+        // Check if initial and final position is valid (in the board) (Validation d)
+        if (mv.initialX < 0 || mv.initialX >= Board.SIZE || mv.finalX < 0 || mv.finalX >= Board.SIZE) { return false; }
+        if (mv.initialY < 0 || mv.initialY >= Board.SIZE || mv.finalY < 0 || mv.finalY >= Board.SIZE) { return false; }
+
         // Check that a piece is present and that it belongs to the current player (Validation a + b)
         if (!player.getPlayGround().getGrid()[mv.initialX][mv.initialY].isOccupied() ||
                 player.getPlayGround().getGrid()[mv.initialX][mv.initialY].getPiece().getPlayer() != player.getColor()) { return false; }
 
         // Check if move is valid for the current piece (Validation c)
         if (!player.getPlayGround().getGrid()[mv.initialX][mv.initialY].getPiece().isMoveLegal(mv)) { return false; }
-
-        // Check if initial and final position is valid (in the board) (Validation d)
-        if (mv.initialX < 0 || mv.initialX >= Board.SIZE || mv.finalX < 0 || mv.finalX >= Board.SIZE) { return false; }
-        if (mv.initialY < 0 || mv.initialY >= Board.SIZE || mv.finalY < 0 || mv.finalY >= Board.SIZE) { return false; }
 
         // Check if there is a piece of the current player on the destination case (Validation e)
         if (player.getPlayGround().getGrid()[mv.finalX][mv.finalY].isOccupied() &&
